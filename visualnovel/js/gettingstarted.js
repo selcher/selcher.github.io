@@ -76,8 +76,7 @@ function initMenu() {
 		{ "link" : "showInfo", "content" : "info" },
 		{ "link" : "showGettingStarted", "content" : "getting-started" },
 		{ "link" : "showDocs", "content" : "docs" },
-		{ "link" : "showExamples", "content" : "examples" },
-		{ "link" : "showReleases", "content" : "releases" }
+		{ "link" : "showExamples", "content" : "examples" }
 	);
 	initMenuLinks( "menuLink", tabs.list, tabs.map );
 
