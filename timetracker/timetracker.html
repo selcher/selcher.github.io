@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+	<title>Time tracker</title>
+	
+	<link rel="stylesheet" href="css/pure-min.css"/>
+	<link rel="stylesheet" href="css/grids-responsive-min.css"/>
+
+	<link type="text/css" rel="stylesheet" href="css/jquery-ui.css" />
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="js/react-with-addons.min.js"></script>
+	<script type="text/javascript" src="js/JSXTransformer.js"></script>
+	
+	<style>
+
+		body {
+			background: purple;
+		}
+
+		#main-menu {
+			background-color: rgba( 255, 255, 255, 0.2 );
+		}
+
+		.main-menu-heading {
+			color: rgba( 255, 255, 255, 0.7 ) !important;
+		}
+
+		.menu-item-link {
+			
+		}
+
+		#sidebar-tabs {
+			background-color: rgba( 255, 255, 255, 0.1 );
+			border: none;
+			border-radius: 0px 5px 5px 0px;
+		}
+
+		#task-content {
+			height: 100%;
+			margin-left: 20px;
+			overflow: auto;
+		}
+
+		.showTab {
+			display: block;
+		}
+
+		.hideTab {
+			display: none;
+		}
+
+		#new-task-form {
+			margin-top: 10px;
+			padding-bottom: 10px;
+			padding-left: 20px;
+			border-left: 10px solid rgba( 255, 255, 255, 0.1 );
+			background-color: rgba( 255, 255, 255, 0.1 );
+		}
+
+		.successMessage {
+			width: 295px;
+			padding: 10px;
+			background-color: rgba( 0, 255, 0, 0.8 );
+			border-radius: 20px;
+			color: rgba( 255, 255, 255, 0.5 );
+			font-weight: bold;
+		}
+
+		.errorMessage {
+			width: 295px;
+			padding: 10px;
+			background-color: rgba( 255, 0, 0, 0.8 );
+			border-radius: 20px;
+			color: rgba( 255, 255, 255, 0.5 );
+			font-weight: bold;
+		}
+
+		.switch-tab-animation-enter {
+		  opacity: 0.01;
+		  transition: opacity .5s ease-in;
+		}
+
+		.switch-tab-animation-enter.switch-tab-animation-enter-active {
+		  opacity: 1;
+		}
+
+		.show-hide-animation-enter {
+		  opacity: 0.01;
+		  transition: opacity .5s ease-in;
+		}
+
+		.show-hide-animation-enter.show-hide-animation-enter-active {
+		  opacity: 1;
+		}
+
+		.show-hide-animation-leave {
+		  opacity: 1;
+		  transition: opacity .5s ease-in;
+		}
+
+		.show-hide-animation-leave.show-hide-animation-leave-active {
+		  opacity: 0.01;
+		}
+
+		table {
+			border: none !important;
+		}
+
+		thead {
+			background-color: rgba( 255, 255, 255, 0.7 ) !important;
+		}
+
+		.row-even {
+			background-color: rgba( 255, 255, 255, 0.2 );
+		}
+
+		.row-odd {
+			background-color: rgba( 255, 255, 255, 0.3 );
+		}
+
+		.icon {
+			width: 20px;
+			height: 20px;
+		}
+
+		.taskPlay {
+			background-image: url( "img/icon/play2.png" );
+			background-repeat: no-repeat;
+		}
+
+		.taskPause {
+			background-image: url( "img/icon/pause.png" );
+			background-repeat: no-repeat;
+		}
+
+		.iconButton {
+			padding: 5px;
+			background-position: 5px 5px;
+		}
+
+		.iconCheck {
+			background-image: url( "img/icon/checkmark.png" );
+			background-repeat: no-repeat;
+		}
+
+		.iconClose {
+			background-image: url( "img/icon/close.png" );
+			background-repeat: no-repeat;
+		}
+
+		.hide {
+			display : none;
+		}
+
+		.noBorder {
+			border: none;
+		}
+
+		.noBackground {
+			background-color: transparent;
+		}
+
+		.clearFloat{
+			clear: both;
+		}
+
+		.floatLeft {
+			float: left;
+		}
+
+		.cursor {
+			cursor: pointer;
+		}
+
+		.pure-menu a {
+			color: rgba( 0, 0, 0, 0.2 );
+		}
+
+	</style>
+
+</head>
+
+<body>
+	
+	<!-- nav -->
+	<div>
+
+		<nav id="main-menu" class="pure-menu pure-menu-open pure-menu-horizontal">
+
+			<a href="/" class="pure-menu-heading main-menu-heading">Home</a>
+
+		   <ul class="menu-list">
+		      <li class="pure-menu-selected"><a class="menu-item-link" href="#">Time tracker</a></li>
+		   </ul>
+
+		</nav>
+
+	</div>
+
+	<!-- content -->
+	<div id="app"></div>
+
+	<script type="text/jsx" src="js/timetracker.jsx"></script>
+	
+</body>
+
+</html>
