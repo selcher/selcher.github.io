@@ -1,9 +1,31 @@
-/** @jsx React.DOM */
-
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
+// Task list container
+var TaskListContainer = React.createClass( {
+	render: function() {
+
+		var showCurrentTasks = this.props.show ? "showTab" : "hideTab";
+
+		return (
+			<div id="current-task-content"
+				className={ showCurrentTasks }>
+
+				<TaskList tasks={ this.props.tasks }
+					startTaskEdit={ this.props.startTaskEdit }
+					changeTaskEdit={ this.props.changeTaskEdit }
+					saveTaskEdit={ this.props.saveTaskEdit }
+					cancelTaskEdit={ this.props.cancelTaskEdit }
+					toggleTimer={ this.props.toggleTimer }
+					removeTask={ this.props.removeTaskClick } />
+
+			</div>
+		);
+
+	}
+} );
+
 // Current task tab content
-var CurrentTask = React.createClass( {
+var TaskList = React.createClass( {
 	handleTaskNameStartEdit: function( taskInfo ) {
 		this.props.startTaskEdit( taskInfo, "name" );
 	},
@@ -38,7 +60,7 @@ var CurrentTask = React.createClass( {
 	},
 	render: function() {
 
-		var tasks = this.props.task.map(
+		var tasks = this.props.tasks.map(
 				function( taskInfo ) {
 
 					var editName = taskInfo.editing.name ? "" : "noBackground noBorder";
@@ -116,9 +138,27 @@ var CurrentTask = React.createClass( {
 						</tr>
 					</thead>
 					<tbody>
-						{tasks}
+						{ tasks }
 					</tbody>
 				</table>
+			</div>
+		);
+
+	}
+} );
+
+// New task form
+var NewTaskForm = React.createClass( {
+	render: function() {
+
+		var showNewTaskForm = this.props.show ? "showTab" : "hideTab";
+
+		return (
+			<div id="new-task-form"
+				className={ showNewTaskForm }>
+
+				<NewTask onAddNewTaskClick={ this.props.onAddNewTaskClick } />
+
 			</div>
 		);
 
@@ -175,15 +215,15 @@ var NewTask = React.createClass( {
 
 		var timer = setTimeout( function() {
 
-			this.setState( { 
+			this.setState( {
 				message : "",
 				status : "",
 				timer : null
 			} );
-			
+
 		}.bind( this ), 3000 );
 
-		this.setState( { 
+		this.setState( {
 			message : message,
 			status : status,
 			timer : timer
@@ -195,14 +235,14 @@ var NewTask = React.createClass( {
 		var taskName = this.state.taskName;
 		var taskDescription = this.state.taskDescription;
 		var status = this.state.status;
-		var messageClass = status == "" ? "" : 
+		var messageClass = status == "" ? "" :
 			( status == "success" ? "successMessage" : "errorMessage" );
 
 		return (
-			<form name="contact" action="#" method="post" 
-	       		className={"pure-form pure-form-stacked "}>
+			<form name="contact" action="#" method="post"
+	    		className={"pure-form pure-form-stacked "}>
 
-	       		<br/>
+	    		<br/>
 
 				<fieldset>
 
@@ -222,12 +262,12 @@ var NewTask = React.createClass( {
 		            <br/>
 
 			        <div className={"pure-controls"}>
-			        	<input type="button" 
+			        	<input type="button"
 			        		className={"pure-button pure-button-primary"} value="Add"
 			        		onClick={ this.onAddNewTask.bind( this ) } />
 			        	&nbsp;
-			        	<input type="reset" 
-			        		className={"pure-button"} value="Reset" /> 
+			        	<input type="reset"
+			        		className={"pure-button"} value="Reset" />
 			        </div>
 
 			        <br/>
@@ -248,43 +288,80 @@ var NewTask = React.createClass( {
 
 } );
 
-// Sidebar tabs
-var SidebarTabs = React.createClass( {
-	onClick: function( tabId ) {
-		this.props.onTabClick( tabId );
-	},		
+// DateInfo
+var DateInfo = React.createClass( {
 	render: function() {
 
-		var activeTab = this.props.activeTab;
-		var tabs = this.props.data.map(
-				function( tab ) {
-					return (
-						<li className={ tab.id == activeTab ? "pure-menu-selected" : "" }
-							onClick={ this.onClick.bind( this, tab.id ) }>
-							<a className={"menu-item-link"} href="#">
-								{ tab.text }
-							</a>
-						</li>
-					);
-				}.bind( this )
-			);
-
 		var d = new Date();
-		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+		var days = [
+			"Sunday", "Monday", "Tuesday", "Wednesday",
+			"Thursday", "Friday", "Saturday"
+		];
 		var dayOfWeek = days[ d.getDay() ];
-		var months = ["January","February","March","April","May","June",
-			"July","August","September","October","November","December"];
+		var months = [
+			"January", "February", "March", "April", "May", "June",
+			"July", "August", "September", "October", "November", "December"
+		];
 		var month = months[ d.getMonth() ];
 		var today = month + " " + d.getDate() + ", " + d.getFullYear();
 
 		return (
-			<nav id="sidebar-tabs" className={"pure-menu pure-menu-open"}>
-				<a className={"pure-menu-heading main-menu-heading"}>
-					{today}<br/>{dayOfWeek}
+			<div>
+				{ today }
+				<br/>
+				{ dayOfWeek }
+			</div>
+		);
+
+	}
+} );
+
+// Sidebar
+var Sidebar = React.createClass( {
+	getDefaultProps: function() {
+
+		return {
+			"activeTab": 0,
+			"tabs": [
+				{
+					"id": 0,
+					"link": "#",
+					"text": "tab 1"
+				}
+			],
+			"onTabClick": function( e, tab ) {}
+		};
+
+	},
+	render: function() {
+
+		return (
+			<aside id="sidebar"
+				className="pure-u-1 pure-u-md-5-24 pure-u-lg-1-4 small-box shadow">
+
+				<SidebarTabs activeTab={ this.props.activeTab }
+					tabs={ this.props.tabs }
+					onTabClick={ this.props.onTabClick } />
+
+			</aside>
+		);
+
+	}
+} );
+
+// Sidebar tabs
+var SidebarTabs = React.createClass( {
+	render: function() {
+
+		return (
+			<nav id="sidebar-tabs"
+				className="pure-menu pure-menu-open">
+				<a className="pure-menu-heading main-menu-heading">
+					<DateInfo />
 				</a>
-				<ul className={"menu-list"}>
-					{tabs}
-				</ul>
+				<SidebarTabList activeTab={ this.props.activeTab }
+					tabs={ this.props.tabs }
+					onTabClick={ this.props.onTabClick } />
 			</nav>
 		);
 
@@ -292,17 +369,70 @@ var SidebarTabs = React.createClass( {
 
 } );
 
+var SidebarTabList = React.createClass( {
+	render: function() {
+
+		var activeTab = this.props.activeTab;
+		var onTabClick = this.props.onTabClick;
+		var tabs = this.props.tabs.map(
+				function( tab ) {
+
+					var tabClass = tab.id == activeTab ?
+						"pure-menu-selected" : "";
+
+					return (
+						<li className={ tabClass }>
+							<SidebarTabLink tab={ tab }
+								onTabClick={ onTabClick } />
+						</li>
+					);
+
+				}
+			);
+
+		return (
+			<ul className="menu-list">
+				{ tabs }
+			</ul>
+		);
+
+	}
+} );
+
+var SidebarTabLink = React.createClass( {
+	onTabClick: function( e ) {
+
+		this.props.onTabClick( e, this.props.tab );
+
+	},
+	render: function() {
+
+		var tabData = this.props.tab;
+
+		return(
+			<a className="menu-item-link"
+				href={ tabData.link }
+				onClick={ this.onTabClick }>
+				{ tabData.text }
+			</a>
+		);
+
+	}
+} );
+
 // Time tracker app
-var App = React.createClass( {
+var TimeTrackerApp = React.createClass( {
 	getInitialState: function() {
+
 		return {
 			activeTab : 0,
-			data : [
-				{ id: 0, text : "New Task" },
-				{ id: 1, text : "Current Tasks" },
+			tabs : [
+				{ id: 0, link: "#", text : "New Task" },
+				{ id: 1, link: "#", text : "Current Tasks" },
 			],
-			task : [
-				{ id : 0, 
+			tasks : [
+				{
+					id : 0,
 					name : "First task",
 					description : "Description...",
 					state : "onPause",
@@ -312,9 +442,11 @@ var App = React.createClass( {
 						description : false,
 						descriptionStore : ""
 					},
-					total : { h : 0, m : 0, s : 0 } },
-				{ id : 1, 
-					name : "Second task", 
+					total : { h : 0, m : 0, s : 0 }
+				},
+				{
+					id : 1,
+					name : "Second task",
 					description : "Description...",
 					state : "onPause",
 					editing : {
@@ -323,15 +455,22 @@ var App = React.createClass( {
 						description : false,
 						descriptionStore : ""
 					},
-					total : { h : 0, m : 0, s : 0 } }
+					total : { h : 0, m : 0, s : 0 }
+				}
 			]
 		};
+
 	},
-	handleTabClick: function( tabId ) {
-		this.setState( { activeTab : tabId } );
+	handleTabClick: function( e, tab ) {
+
+		e.preventDefault();
+
+		this.setState( { activeTab : tab.id } );
+
 	},
 	handleAddNewTaskClick: function( name, description ) {
-		var currentTasks = this.state.task;
+
+		var currentTasks = this.state.tasks;
 		var newTask = {
 			id : currentTasks.length,
 			name : name,
@@ -345,56 +484,80 @@ var App = React.createClass( {
 			},
 			total : { h : 0, m : 0, s : 0 }
 		};
+
 		currentTasks.push( newTask );
-		this.setState( { task : currentTasks } );
+
+		this.setState( { tasks : currentTasks } );
+
 	},
 	handleRemoveTaskClick: function( taskInfo ) {
-		var currentTasks = this.state.task.slice();
+
+		var currentTasks = this.state.tasks.slice();
 		var length = currentTasks.length;
 		var taskId = taskInfo.id;
 		var taskIndexInList = null;
 
 		for( var i = 0; i < length; i++ ) {
+
 			if ( currentTasks[ i ].id == taskId ) {
 				taskIndexInList = i;
 			}
+
 		}
 
 		currentTasks.splice( taskIndexInList, 1 );
-		this.setState( { task : currentTasks } );
+
+		this.setState( { tasks : currentTasks } );
+
 	},
 	handleStartTaskEdit: function( taskInfo, fieldName ) {
-		var currentTasks = this.state.task;
+
+		var currentTasks = this.state.tasks;
+
 		currentTasks[ taskInfo.id ].editing[ fieldName ] = true;
 		currentTasks[ taskInfo.id ].editing[ fieldName + "Store" ] = currentTasks[ taskInfo.id ][ fieldName ];
-		this.setState( { task : currentTasks } );
+
+		this.setState( { tasks : currentTasks } );
+
 	},
 	handleChangeTaskEdit: function( taskInfo, fieldName, fieldValue ) {
-		var currentTasks = this.state.task;
+
+		var currentTasks = this.state.tasks;
+
 		currentTasks[ taskInfo.id ][ fieldName ] = fieldValue;
-		this.setState( { task : currentTasks } );
+
+		this.setState( { tasks : currentTasks } );
+
 	},
 	handleSaveTaskEdit: function( taskInfo, fieldName ) {
-		var currentTasks = this.state.task;
+
+		var currentTasks = this.state.tasks;
+
 		currentTasks[ taskInfo.id ].editing[ fieldName ] = false;
 		currentTasks[ taskInfo.id ].editing[ fieldName + "Store" ] = "";
-		this.setState( { task : currentTasks } );
+
+		this.setState( { tasks : currentTasks } );
+
 	},
 	handleCancelTaskEdit: function( taskInfo, fieldName ) {
-		var currentTasks = this.state.task;
+
+		var currentTasks = this.state.tasks;
+
 		currentTasks[ taskInfo.id ][ fieldName ] = currentTasks[ taskInfo.id ].editing[ fieldName + "Store" ];
 		currentTasks[ taskInfo.id ].editing[ fieldName ] = false;
 		currentTasks[ taskInfo.id ].editing[ fieldName + "Store" ] = "";
-		this.setState( { task : currentTasks } );
+
+		this.setState( { tasks : currentTasks } );
+
 	},
 	handleToggleTimer: function( taskInfo ) {
-		
+
 		var self = this;
-		var currentTasks = this.state.task;
+		var currentTasks = this.state.tasks;
 
 		function updateTask( task ) {
 			currentTasks[ task.id ] = task;
-			self.setState( { task : currentTasks } );
+			self.setState( { tasks : currentTasks } );
 		}
 
 		if ( taskInfo.timer ) {
@@ -415,7 +578,7 @@ var App = React.createClass( {
 				var addHr = addMin && taskInfo.total.m + 1 >= 60;
 
 				taskInfo.total.s = sec;
-				taskInfo.total.m = addMin ? 
+				taskInfo.total.m = addMin ?
 					( addHr ? 0 : taskInfo.total.m + 1 ) : taskInfo.total.m;
 				taskInfo.total.h = addHr ? taskInfo.total.h + 1 : taskInfo.total.h;
 
@@ -426,55 +589,59 @@ var App = React.createClass( {
 		}
 
 		updateTask( taskInfo );
-		
+
 	},
 	render: function() {
+
+		var activeTab = this.state.activeTab;
+
 		return (
-			<div className={"pure-g"}>
+			<div className="pure-g">
 
-				<aside id="sidebar" 
-					className={"pure-u-1 pure-u-md-5-24 pure-u-lg-1-4 small-box shadow"}>
+				<Sidebar activeTab={ activeTab }
+					tabs={ this.state.tabs }
+					onTabClick={ this.handleTabClick } />
 
-			       	<SidebarTabs activeTab={this.state.activeTab} data={this.state.data}
-			       		onTabClick={this.handleTabClick} />
+			    <aside id="task-content"
+			    	className="pure-u-1 pure-u-md-18-24 pure-u-lg-17-24 small-box shadow">
 
-			    </aside>
+			    	<ReactCSSTransitionGroup
+						transitionName="switch-tab-animation"
+						transitionLeave={ false }>
 
-			    <aside id="task-content" 
-			    	className={"pure-u-1 pure-u-md-18-24 pure-u-lg-17-24 small-box shadow"}>
+						<NewTaskForm
+							key={ activeTab }
+							show={ activeTab == 0 }
+							onAddNewTaskClick={ this.handleAddNewTaskClick } />
 
-			    	<ReactCSSTransitionGroup transitionName="switch-tab-animation"
-							transitionLeave={false}>
-				       	<div id="new-task-form" 
-				       		key={this.state.activeTab}
-				       		className={ this.state.activeTab == 0 ? "showTab" : "hideTab" }>
-				       		<NewTask onAddNewTaskClick={this.handleAddNewTaskClick} />
-				       	</div>
-			       	</ReactCSSTransitionGroup>
+					</ReactCSSTransitionGroup>
 
-			       	<ReactCSSTransitionGroup transitionName="switch-tab-animation"
-							transitionLeave={false}>
-				       	<div id="current-task-content"
-				       		key={this.state.activeTab}
-				       		className={ this.state.activeTab == 1 ? "showTab" : "hideTab" }>
-				    		<CurrentTask task={this.state.task}
-				    			startTaskEdit={this.handleStartTaskEdit}
-				    			changeTaskEdit={this.handleChangeTaskEdit}
-				    			saveTaskEdit={this.handleSaveTaskEdit}
-				    			cancelTaskEdit={this.handleCancelTaskEdit}
-				    			toggleTimer={this.handleToggleTimer}
-				    			removeTask={this.handleRemoveTaskClick} />
-				    	</div>
+			    	<ReactCSSTransitionGroup
+						transitionName="switch-tab-animation"
+						transitionLeave={ false }>
+
+						<TaskListContainer
+							key={ activeTab }
+							show={ activeTab == 1 }
+							tasks={ this.state.tasks }
+							startTaskEdit={ this.handleStartTaskEdit }
+							changeTaskEdit={ this.handleChangeTaskEdit }
+							saveTaskEdit={ this.handleSaveTaskEdit }
+							cancelTaskEdit={ this.handleCancelTaskEdit }
+							toggleTimer={ this.handleToggleTimer }
+							removeTask={ this.handleRemoveTaskClick } />
+
 			    	</ReactCSSTransitionGroup>
 
 			    </aside>
 
 		    </div>
 		);
+
 	}
 } );
 
 React.renderComponent(
-	<App />,
+	<TimeTrackerApp />,
 	document.getElementById( "app" )
 );
