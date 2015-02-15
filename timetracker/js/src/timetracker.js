@@ -16,7 +16,7 @@ var TaskListContainer = React.createClass( {
 					saveTaskEdit={ this.props.saveTaskEdit }
 					cancelTaskEdit={ this.props.cancelTaskEdit }
 					toggleTimer={ this.props.toggleTimer }
-					removeTask={ this.props.removeTaskClick } />
+					removeTask={ this.props.removeTask } />
 
 			</div>
 		);
