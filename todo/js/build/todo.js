@@ -329,6 +329,20 @@
 	} );
 
 	var TodoBox = React.createClass( {displayName: "TodoBox",
+		getMinHeight: function( list ) {
+
+			return 70 + ( list.length * 25 );
+
+		},
+		handleUpdateTodoBoxSize: function() {
+
+			var todoBoxDiv = this.refs.todoBox.getDOMNode();
+			var todoList = this.props.todo.list;
+
+			$( todoBoxDiv ).resizable( "option", "minHeight",
+				this.getMinHeight( todoList ) );
+
+		},
 		render: function() {
 
 			var todoData = this.props.todo;
@@ -337,15 +351,27 @@
 			};
 
 			return (
-				React.createElement("div", {style: todoBoxStyle, className: "todo-box pure-u-1-3"}, 
+				React.createElement("div", {ref: "todoBox", 
+					style: todoBoxStyle, 
+					className: "todo-box pure-u-1-3"}, 
 					React.createElement(TodoForm, {name:  todoData.name, 
 						onRemoveTodoBox:  this.props.onRemoveTodoBox, 
-						onNewTodoItem:  this.props.onNewTodoItem}), 
+						onNewTodoItem:  this.props.onNewTodoItem, 
+						updateTodoBoxSize:  this.handleUpdateTodoBoxSize}), 
 					React.createElement(TodoList, {name:  todoData.name, 
 						list:  todoData.list, 
 						onRemoveTodoItem:  this.props.onRemoveTodoItem})
 				)
 			);
+
+		},
+		componentDidMount: function() {
+
+			var todoBoxDiv = this.refs.todoBox.getDOMNode();
+
+			$( todoBoxDiv ).resizable( {
+				minHeight: this.getMinHeight( this.props.todo.list )
+			} );
 
 		}
 	} );
@@ -367,6 +393,7 @@
 			var newTodo = this.refs.newTodo.getDOMNode().value.trim();
 
 			this.props.onNewTodoItem( todoLabel, newTodo );
+			this.props.updateTodoBoxSize();
 
 			this.refs.newTodo.getDOMNode().value = "";
 
