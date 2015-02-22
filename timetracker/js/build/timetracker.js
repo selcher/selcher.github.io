@@ -4,19 +4,19 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var TaskListContainer = React.createClass( {displayName: "TaskListContainer",
 	render: function() {
 
-		var showCurrentTasks = this.props.show ? "showTab" : "hideTab";
+		var props = this.props;
 
 		return (
 			React.createElement("div", {id: "current-task-content", 
-				className: showCurrentTasks }, 
+				className:  props.show ? "showTab" : "hideTab"}, 
 
-				React.createElement(TaskList, {tasks:  this.props.tasks, 
-					startTaskEdit:  this.props.startTaskEdit, 
-					changeTaskEdit:  this.props.changeTaskEdit, 
-					saveTaskEdit:  this.props.saveTaskEdit, 
-					cancelTaskEdit:  this.props.cancelTaskEdit, 
-					toggleTimer:  this.props.toggleTimer, 
-					removeTask:  this.props.removeTask})
+				React.createElement(TaskList, {tasks:  props.tasks, 
+					startTaskEdit:  props.startTaskEdit, 
+					changeTaskEdit:  props.changeTaskEdit, 
+					saveTaskEdit:  props.saveTaskEdit, 
+					cancelTaskEdit:  props.cancelTaskEdit, 
+					toggleTimer:  props.toggleTimer, 
+					removeTask:  props.removeTask})
 
 			)
 		);
@@ -27,102 +27,77 @@ var TaskListContainer = React.createClass( {displayName: "TaskListContainer",
 // Current task tab content
 var TaskList = React.createClass( {displayName: "TaskList",
 	handleTaskNameStartEdit: function( taskInfo ) {
+
 		this.props.startTaskEdit( taskInfo, "name" );
+
 	},
-	handleTaskNameChange: function( taskInfo, event ) {
-		var name = event.target.value;
+	handleTaskNameChange: function( taskInfo, name ) {
+
 		this.props.changeTaskEdit( taskInfo, "name", name );
+
 	},
 	handleTaskNameSaveEdit: function( taskInfo ) {
+
 		this.props.saveTaskEdit( taskInfo, "name" );
+
 	},
 	handleTaskNameCancelEdit: function( taskInfo ) {
+
 		this.props.cancelTaskEdit( taskInfo, "name" );
+
 	},
 	handleTaskDescriptionStartEdit: function( taskInfo ) {
+
 		this.props.startTaskEdit( taskInfo, "description" );
+
 	},
-	handleTaskDescriptionChange: function( taskInfo, event ) {
-		var description = event.target.value;
+	handleTaskDescriptionChange: function( taskInfo, description ) {
+
 		this.props.changeTaskEdit( taskInfo, "description", description );
+
 	},
 	handleTaskDescriptionSaveEdit: function( taskInfo ) {
+
 		this.props.saveTaskEdit( taskInfo, "description" );
+
 	},
 	handleTaskDescriptionCancelEdit: function( taskInfo ) {
+
 		this.props.cancelTaskEdit( taskInfo, "description" );
+
 	},
 	toggleTimer: function( taskInfo ) {
+
 		this.props.toggleTimer( taskInfo );
+
 	},
 	handleRemoveTask: function( taskInfo ) {
+
 		this.props.removeTask( taskInfo );
+
 	},
 	render: function() {
 
 		var tasks = this.props.tasks.map(
-				function( taskInfo ) {
+			function( taskInfo ) {
 
-					var editName = taskInfo.editing.name ? "" : "noBackground noBorder";
-					var editNameOkButton = taskInfo.editing.name ? "" : "hide";
-					var editNameCancelButton = taskInfo.editing.name ? "" : "hide";
-					var editDescription = taskInfo.editing.description ? "" : "noBackground noBorder";
-					var editDescriptionOkButton = taskInfo.editing.description ? "" : "hide";
-					var editDescriptionCancelButton = taskInfo.editing.description ? "" : "hide";
-					var total = taskInfo.total;
-					var totalTime = total.h + "h " + total.m + "m " + total.s + "s";
-					var playIcon = taskInfo.state == "onPause" ? "taskPlay" : "taskPause";
-					var removeIcon = taskInfo.state != "onPause" ? "hide" : "";
+				return (
+					React.createElement(Task, {info: taskInfo, 
+						handleRemoveTask:  this.handleRemoveTask, 
+						handleTaskNameStartEdit:  this.handleTaskNameStartEdit, 
+						handleTaskNameChange:  this.handleTaskNameChange, 
+						handleTaskNameSaveEdit:  this.handleTaskNameSaveEdit, 
+						handleTaskNameCancelEdit:  this.handleTaskNameCancelEdit, 
+						handleTaskDescriptionStartEdit:  this.handleTaskDescriptionStartEdit, 
+						handleTaskDescriptionChange:  this.handleTaskDescriptionChange, 
+						handleTaskDescriptionSaveEdit:  this.handleTaskDescriptionSaveEdit, 
+						handleTaskDescriptionCancelEdit:  this.handleTaskDescriptionCancelEdit, 
+						toggleTimer:  this.toggleTimer})
+				);
 
-					return (
-						React.createElement("tr", {className:  taskInfo.id % 2 == 0 ? "row-even" : "row-odd"}, 
-							React.createElement("td", null, 
-								taskInfo.id + 1
-							), 
-							React.createElement("td", null, 
-								React.createElement("input", {type: "text", name: "name", placeholder: "Name", 
-									className: editName, 
-		            				value: taskInfo.name, 
-		            				onClick: this.handleTaskNameStartEdit.bind(this,taskInfo), 
-		            				onChange: this.handleTaskNameChange.bind(this,taskInfo)}), 
-		            			React.createElement("div", {className: "clearFloat" }), 
-		            			React.createElement("div", {className:  "icon iconButton iconCheck floatLeft " + editNameOkButton, 
-			        				onClick: this.handleTaskNameSaveEdit.bind(this,taskInfo)}
-			        			), 
-			        			React.createElement("div", {className:  "icon iconButton iconClose floatLeft " + editNameOkButton, 
-			        				onClick: this.handleTaskNameCancelEdit.bind(this,taskInfo)}
-			        			)
-							), 
-							React.createElement("td", null, 
-								React.createElement("textarea", {name: "description", placeholder: "Description", 
-									className: editDescription, 
-		            				value: taskInfo.description, 
-		            				onClick: this.handleTaskDescriptionStartEdit.bind(this,taskInfo), 
-		            				onChange: this.handleTaskDescriptionChange.bind(this,taskInfo)}
-		            			), 
-		            			React.createElement("div", {className: "clearFloat" }), 
-		            			React.createElement("div", {className:  "icon iconButton iconCheck floatLeft " + editDescriptionOkButton, 
-			        				onClick: this.handleTaskDescriptionSaveEdit.bind(this,taskInfo)}
-			        			), 
-			        			React.createElement("div", {className:  "icon iconButton iconClose floatLeft " + editDescriptionOkButton, 
-			        				onClick: this.handleTaskDescriptionCancelEdit.bind(this,taskInfo)}
-			        			)
-							), 
-							React.createElement("td", null, 
-								totalTime
-							), 
-							React.createElement("td", null, 
-								React.createElement("div", {className:  "cursor icon " + playIcon, 
-									onClick: this.toggleTimer.bind(this,taskInfo)}), 
-								React.createElement("div", {className:  "cursor icon iconClose " + removeIcon, 
-									onClick: this.handleRemoveTask.bind(this,taskInfo)})
-							)
-						)
-					);
+			}.bind( this )
 
-				}.bind( this )
-
-			);
+		);
 
 		return (
 			React.createElement("div", null, 
@@ -130,7 +105,7 @@ var TaskList = React.createClass( {displayName: "TaskList",
 				React.createElement("table", {className: "pure-table pure-table-horizontal"}, 
 					React.createElement("thead", null, 
 						React.createElement("tr", null, 
-							React.createElement("th", null, "#"), 
+							React.createElement("th", null), 
 							React.createElement("th", null, "Name"), 
 							React.createElement("th", null, "Description"), 
 							React.createElement("th", null, "Total"), 
@@ -147,17 +122,157 @@ var TaskList = React.createClass( {displayName: "TaskList",
 	}
 } );
 
+// Task
+var Task = React.createClass ( {displayName: "Task",
+	handleRemoveTask: function() {
+
+		this.props.handleRemoveTask( this.props.info );
+
+	},
+	handleTaskNameStartEdit: function() {
+
+		this.props.handleTaskNameStartEdit( this.props.info );
+
+	},
+	handleTaskNameChange: function( e ) {
+
+		var newTaskName = e.target.value;
+		this.props.handleTaskNameChange( this.props.info, newTaskName );
+
+	},
+	handleTaskNameSaveEdit: function() {
+
+		this.props.handleTaskNameSaveEdit( this.props.info );
+
+	},
+	handleTaskNameCancelEdit: function() {
+
+		this.props.handleTaskNameCancelEdit( this.props.info );
+
+	},
+	handleTaskDescriptionStartEdit: function() {
+
+		this.props.handleTaskDescriptionStartEdit( this.props.info );
+
+	},
+	handleTaskDescriptionChange: function( e ) {
+
+		var newTaskDesc = e.target.value;
+		this.props.handleTaskDescriptionChange( this.props.info, newTaskDesc );
+
+	},
+	handleTaskDescriptionSaveEdit: function() {
+
+		this.props.handleTaskDescriptionSaveEdit( this.props.info );
+
+	},
+	handleTaskDescriptionCancelEdit: function() {
+
+		this.props.handleTaskDescriptionCancelEdit( this.props.info );
+
+	},
+	toggleTimer: function() {
+
+		this.props.toggleTimer( this.props.info );
+
+	},
+	render: function() {
+
+		var taskInfo = this.props.info;
+
+		var editingName = taskInfo.editing.name;
+		var editName = editingName ? "" : "noBackground noBorder";
+		var editNameOkButton = editingName ? "" : "hide";
+		var editNameCancelButton = editingName ? "" : "hide";
+
+		var editingDesc = taskInfo.editing.description;
+		var editDescription = editingDesc ? "" : "noBackground noBorder";
+		var editDescriptionOkButton = editingDesc ? "" : "hide";
+		var editDescriptionCancelButton = editingDesc ? "" : "hide";
+
+		var total = taskInfo.total;
+		var totalTime = total.h + "h " + total.m + "m " + total.s + "s";
+
+		var onPause = taskInfo.state == "onPause";
+		var playIcon = onPause ? "fa fa-play" : "fa fa-pause";
+		var onPlayIconClick = this.toggleTimer;
+		var showRemoveIcon = onPause ? "" : "hide";
+		var showRunningIcon = onPause ? "hide" : "";
+
+		return (
+
+			React.createElement("tr", {className:  taskInfo.id % 2 == 0 ? "row-even" : "row-odd"}, 
+
+				React.createElement("td", null, 
+					React.createElement("i", {className:  "cursor taskRemove fa fa-times " +
+						showRemoveIcon, 
+						onClick:  this.handleRemoveTask}), 
+					React.createElement("i", {className:  "taskRunning fa fa-spinner fa-spin " +
+						showRunningIcon})
+				), 
+
+				React.createElement("td", null, 
+					React.createElement("input", {type: "text", name: "name", placeholder: "Name", 
+						className: editName, 
+						value:  taskInfo.name, 
+						onClick:  this.handleTaskNameStartEdit, 
+						onChange:  this.handleTaskNameChange}), 
+					React.createElement("div", {className: "clearFloat" }), 
+					React.createElement("div", {className:  "icon iconButton iconCheck floatLeft " +
+						editNameOkButton, 
+						onClick:  this.handleTaskNameSaveEdit}
+					), 
+					React.createElement("div", {className:  "icon iconButton iconClose floatLeft " +
+						editNameOkButton, 
+						onClick:  this.handleTaskNameCancelEdit}
+					)
+				), 
+
+				React.createElement("td", null, 
+					React.createElement("textarea", {name: "description", placeholder: "Description", 
+						className: editDescription, 
+						value:  taskInfo.description, 
+						onClick:  this.handleTaskDescriptionStartEdit, 
+						onChange:  this.handleTaskDescriptionChange}
+					), 
+					React.createElement("div", {className: "clearFloat" }), 
+					React.createElement("div", {className:  "icon iconButton iconCheck floatLeft " +
+						editDescriptionOkButton, 
+						onClick:  this.handleTaskDescriptionSaveEdit}
+					), 
+					React.createElement("div", {className:  "icon iconButton iconClose floatLeft " +
+						editDescriptionOkButton, 
+						onClick:  this.handleTaskDescriptionCancelEdit}
+					)
+				), 
+
+				React.createElement("td", null, 
+					totalTime 
+				), 
+
+				React.createElement("td", null, 
+					React.createElement("i", {className:  "cursor taskPlay " + playIcon, 
+						onClick: onPlayIconClick })
+				)
+
+			)
+
+		);
+
+	}
+} );
+
 // New task form
 var NewTaskForm = React.createClass( {displayName: "NewTaskForm",
 	render: function() {
 
-		var showNewTaskForm = this.props.show ? "showTab" : "hideTab";
+		var props = this.props;
 
 		return (
 			React.createElement("div", {id: "new-task-form", 
-				className: showNewTaskForm }, 
+				className:  props.show ? "showTab" : "hideTab"}, 
 
-				React.createElement(NewTask, {onAddNewTaskClick:  this.props.onAddNewTaskClick})
+				React.createElement(NewTask, {onAddNewTaskClick:  props.onAddNewTaskClick})
 
 			)
 		);
@@ -168,36 +283,42 @@ var NewTaskForm = React.createClass( {displayName: "NewTaskForm",
 // New task tab content
 var NewTask = React.createClass( {displayName: "NewTask",
 	getInitialState: function() {
+
 		return {
-			taskName : "",
-			taskDescription : "",
-			message : "",
-			status : "",
-			timer : null
+			"taskName": "",
+			"taskDescription": "",
+			"message": "",
+			"status": "",
+			"timer": null
 		};
+
 	},
 	handleTaskNameChange: function( event ) {
+
 		this.setState( {
-			taskName : event.target.value,
-			taskDescription : this.state.taskDescription
+			"taskName": event.target.value
 		} );
+
 	},
 	handleTaskDescriptionChange: function( event ) {
+
 		this.setState( {
-			taskName : this.state.taskName,
-			taskDescription : event.target.value
+			"taskDescription": event.target.value
 		} );
+
 	},
 	onAddNewTask: function( ) {
 
-		var taskName = this.state.taskName;
-		var taskDescription = this.state.taskDescription;
+		var state = this.state;
+
+		var taskName = state.taskName;
+		var taskDescription = state.taskDescription;
 		var messge = "";
 		var status = "";
 
 		if ( taskName && taskDescription ) {
 
-			this.props.onAddNewTaskClick( this.state.taskName, this.state.taskDescription );
+			this.props.onAddNewTaskClick( taskName, taskDescription );
 
 			message = "Successfully added new task to the list";
 			status = "success";
@@ -209,24 +330,28 @@ var NewTask = React.createClass( {displayName: "NewTask",
 
 		}
 
-		if ( this.state.timer ) {
-			window.clearTimeout( this.state.timer );
+		if ( state.timer ) {
+
+			window.clearTimeout( state.timer );
+
 		}
 
+		// TOOO: fix bug when switching tabs while
+		// add task success message has not timed out
 		var timer = setTimeout( function() {
 
 			this.setState( {
-				message : "",
-				status : "",
-				timer : null
+				"message" : "",
+				"status" : "",
+				"timer" : null
 			} );
 
-		}.bind( this ), 3000 );
+		}.bind( this ), 1000 );
 
 		this.setState( {
-			message : message,
-			status : status,
-			timer : timer
+			"message": message,
+			"status": status,
+			"timer": timer
 		} );
 
 	},
@@ -237,6 +362,9 @@ var NewTask = React.createClass( {displayName: "NewTask",
 		var status = this.state.status;
 		var messageClass = status == "" ? "" :
 			( status == "success" ? "successMessage" : "errorMessage" );
+		var messageIcon = status == "success" ?
+			( React.createElement("i", {className: "fa fa-check-circle" }) ) :
+			( React.createElement("div", null) );
 
 		return (
 			React.createElement("form", {name: "contact", action: "#", method: "post", 
@@ -250,21 +378,24 @@ var NewTask = React.createClass( {displayName: "NewTask",
 
 		        	React.createElement("label", null, "Name:"), 
 		            React.createElement("input", {type: "text", name: "name", placeholder: "Name", 
-		            	value: taskName, onChange: this.handleTaskNameChange}), 
+		            	value: taskName, 
+						onChange:  this.handleTaskNameChange}), 
 
 		            React.createElement("br", null), 
 
 		            React.createElement("label", null, "Description:"), 
 		            React.createElement("textarea", {name: "message", placeholder: "Description of task...", 
-		            	value: taskDescription, onChange: this.handleTaskDescriptionChange}
+		            	value: taskDescription, 
+						onChange:  this.handleTaskDescriptionChange}
 		            ), 
 
 		            React.createElement("br", null), 
 
 			        React.createElement("div", {className: "pure-controls"}, 
 			        	React.createElement("input", {type: "button", 
-			        		className: "pure-button pure-button-primary", value: "Add", 
-			        		onClick:  this.onAddNewTask.bind( this) }), 
+			        		className: "pure-button pure-button-primary", 
+							value: "Add", 
+			        		onClick:  this.onAddNewTask}), 
 			        	" ", 
 			        	React.createElement("input", {type: "reset", 
 			        		className: "pure-button", value: "Reset"})
@@ -272,10 +403,12 @@ var NewTask = React.createClass( {displayName: "NewTask",
 
 			        React.createElement("br", null), 
 
-			        React.createElement(ReactCSSTransitionGroup, {transitionName: "show-hide-animation"}, 
-			        	React.createElement("div", {key: this.state.message, 
+			        React.createElement(ReactCSSTransitionGroup, {
+						transitionName: "show-hide-animation"}, 
+			        	React.createElement("div", {key:  this.state.message, 
 			        		className: messageClass }, 
-			        		this.state.message
+							messageIcon, 
+			        		 this.state.message
 			        	)
 			        )
 
@@ -408,12 +541,14 @@ var SidebarTabLink = React.createClass( {displayName: "SidebarTabLink",
 	render: function() {
 
 		var tabData = this.props.tab;
+		var linkText = typeof tabData.total !== "undefined" ?
+			tabData.text + " (" + tabData.total + ")" : tabData.text;
 
 		return(
 			React.createElement("a", {className: "menu-item-link", 
 				href:  tabData.link, 
 				onClick:  this.onTabClick}, 
-				 tabData.text
+				linkText 
 			)
 		);
 
@@ -425,37 +560,37 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 	getInitialState: function() {
 
 		return {
-			activeTab : 0,
-			tabs : [
-				{ id: 0, link: "#", text : "New Task" },
-				{ id: 1, link: "#", text : "Current Tasks" },
+			"activeTab": 0,
+			"tabs": [
+				{ "id": 0, "link": "#", "text": "New Task" },
+				{ "id": 1, "link": "#", "text": "Current Tasks", "total": 2 },
 			],
-			tasks : [
+			"tasks": [
 				{
-					id : 0,
-					name : "First task",
-					description : "Description...",
-					state : "onPause",
-					editing : {
-						name : false,
-						nameStore : "",
-						description : false,
-						descriptionStore : ""
+					"id": 0,
+					"name": "First task",
+					"description": "Description...",
+					"state": "onPause",
+					"editing": {
+						"name": false,
+						"nameStore": "",
+						"description": false,
+						"descriptionStore": ""
 					},
-					total : { h : 0, m : 0, s : 0 }
+					"total": { "h": 0, "m": 0, "s": 0 }
 				},
 				{
-					id : 1,
-					name : "Second task",
-					description : "Description...",
-					state : "onPause",
-					editing : {
-						name : false,
-						nameStore : "",
-						description : false,
-						descriptionStore : ""
+					"id": 1,
+					"name": "Second task",
+					"description": "Description...",
+					"state": "onPause",
+					"editing": {
+						"name": false,
+						"nameStore": "",
+						"description": false,
+						"descriptionStore": ""
 					},
-					total : { h : 0, m : 0, s : 0 }
+					"total": { "h": 0, "m": 0, "s": 0 }
 				}
 			]
 		};
@@ -465,29 +600,39 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 
 		e.preventDefault();
 
-		this.setState( { activeTab : tab.id } );
+		this.setState( { "activeTab": tab.id } );
 
 	},
 	handleAddNewTaskClick: function( name, description ) {
 
 		var currentTasks = this.state.tasks;
 		var newTask = {
-			id : currentTasks.length,
-			name : name,
-			description : description,
-			state : "onPause",
-			editing : {
-				name : false,
-				nameStore : "",
-				description : false,
-				descriptionStore : ""
+			"id": currentTasks.length,
+			"name": name,
+			"description": description,
+			"state": "onPause",
+			"editing": {
+				"name": false,
+				"nameStore": "",
+				"description": false,
+				"descriptionStore": ""
 			},
-			total : { h : 0, m : 0, s : 0 }
+			"total": { "h": 0, "m": 0, "s": 0 }
 		};
 
+		// add task
 		currentTasks.push( newTask );
 
-		this.setState( { tasks : currentTasks } );
+		// update total task count on sidebar
+		var tabs = this.state.tabs.slice();
+
+		tabs[ 1 ].total += 1;
+
+		// update state
+		this.setState( {
+			"tabs": tabs,
+			"tasks": currentTasks
+		} );
 
 	},
 	handleRemoveTaskClick: function( taskInfo ) {
@@ -497,6 +642,7 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 		var taskId = taskInfo.id;
 		var taskIndexInList = null;
 
+		// remove task
 		for( var i = 0; i < length; i++ ) {
 
 			if ( currentTasks[ i ].id == taskId ) {
@@ -507,7 +653,16 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 
 		currentTasks.splice( taskIndexInList, 1 );
 
-		this.setState( { tasks : currentTasks } );
+		// update total task count on sidebar
+		var tabs = this.state.tabs.slice();
+
+		tabs[ 1 ].total -= 1;
+
+		// update state
+		this.setState( {
+			"tabs": tabs,
+			"tasks": currentTasks
+		} );
 
 	},
 	handleStartTaskEdit: function( taskInfo, fieldName ) {
@@ -517,7 +672,7 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 		currentTasks[ taskInfo.id ].editing[ fieldName ] = true;
 		currentTasks[ taskInfo.id ].editing[ fieldName + "Store" ] = currentTasks[ taskInfo.id ][ fieldName ];
 
-		this.setState( { tasks : currentTasks } );
+		this.setState( { "tasks": currentTasks } );
 
 	},
 	handleChangeTaskEdit: function( taskInfo, fieldName, fieldValue ) {
@@ -526,7 +681,7 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 
 		currentTasks[ taskInfo.id ][ fieldName ] = fieldValue;
 
-		this.setState( { tasks : currentTasks } );
+		this.setState( { "tasks": currentTasks } );
 
 	},
 	handleSaveTaskEdit: function( taskInfo, fieldName ) {
@@ -536,7 +691,7 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 		currentTasks[ taskInfo.id ].editing[ fieldName ] = false;
 		currentTasks[ taskInfo.id ].editing[ fieldName + "Store" ] = "";
 
-		this.setState( { tasks : currentTasks } );
+		this.setState( { "tasks": currentTasks } );
 
 	},
 	handleCancelTaskEdit: function( taskInfo, fieldName ) {
@@ -547,17 +702,23 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 		currentTasks[ taskInfo.id ].editing[ fieldName ] = false;
 		currentTasks[ taskInfo.id ].editing[ fieldName + "Store" ] = "";
 
-		this.setState( { tasks : currentTasks } );
+		this.setState( { "tasks": currentTasks } );
 
 	},
 	handleToggleTimer: function( taskInfo ) {
 
 		var self = this;
-		var currentTasks = this.state.tasks;
+		var currentTasks = this.state.tasks.slice();
 
 		function updateTask( task ) {
-			currentTasks[ task.id ] = task;
-			self.setState( { tasks : currentTasks } );
+
+			currentTasks.forEach( function( t ) {
+				if ( t.id == task.id ) {
+					t = task;
+				}
+			} );
+
+			self.setState( { "tasks": currentTasks } );
 		}
 
 		if ( taskInfo.timer ) {
@@ -584,7 +745,7 @@ var TimeTrackerApp = React.createClass( {displayName: "TimeTrackerApp",
 
 				updateTask( taskInfo );
 
-			}.bind( this ), 1000 );
+			}, 1000 );
 
 		}
 
