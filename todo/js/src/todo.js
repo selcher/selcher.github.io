@@ -329,6 +329,13 @@
 	} );
 
 	var TodoBox = React.createClass( {
+		getInitialState: function() {
+
+			return {
+				showControls: false
+			};
+
+		},
 		getMinHeight: function( list ) {
 
 			return 70 + ( list.length * 25 );
@@ -343,6 +350,16 @@
 				this.getMinHeight( todoList ) );
 
 		},
+		showControls: function() {
+
+			this.setState( { "showControls": true } );
+
+		},
+		hideControls: function() {
+
+			this.setState( { "showControls": false } );
+
+		},
 		render: function() {
 
 			var todoData = this.props.todo;
@@ -353,8 +370,11 @@
 			return (
 				<div ref="todoBox"
 					style={ todoBoxStyle }
-					className="todo-box pure-u-1-3">
+					className="todo-box pure-u-1-3"
+					onMouseEnter={ this.showControls }
+					onMouseLeave={ this.hideControls }>
 					<TodoForm name={ todoData.name }
+						showControls={ this.state.showControls }
 						onRemoveTodoBox={ this.props.onRemoveTodoBox }
 						onNewTodoItem={ this.props.onNewTodoItem }
 						updateTodoBoxSize={ this.handleUpdateTodoBoxSize } />
@@ -377,6 +397,13 @@
 	} );
 
 	var TodoForm = React.createClass( {
+		getInitialState: function() {
+
+			return {
+				showControls: false
+			};
+
+		},
 		onRemoveTodoBox: function() {
 
 			var props = this.props;
@@ -398,15 +425,32 @@
 			this.refs.newTodo.getDOMNode().value = "";
 
 		},
+		showControls: function() {
+
+			this.setState( { "showControls": true } );
+
+		},
+		hideControls: function() {
+
+			this.setState( { "showControls": false } );
+
+		},
 		render: function() {
 
+			var removeButtonClass = this.state.showControls ?
+				"fa fa-minus-square" : "hide";
+			var formClass = this.props.showControls ?
+				"todo-item-add-form pure-form" : "hide";
+
 			return (
-				<div className="todo-label">
-					<i className="fa fa-minus-square"
+				<div className="todo-label"
+					onMouseEnter={ this.showControls }
+					onMouseLeave={ this.hideControls }>
+					<i className={ removeButtonClass }
 						onClick={ this.onRemoveTodoBox }>
 					</i>
 					{ this.props.name }
-					<form className="todo-item-add-form pure-form"
+					<form className={ formClass }
 						onSubmit={ this.handleSubmit }>
 						<input type="text" ref="newTodo"
 							className="todo-add-input pure-input-1"
@@ -450,15 +494,9 @@
 		getInitialState: function() {
 
 			return {
-				isDone: false
+				isDone: this.props.todo.done,
+				showRemoveButton: false
 			};
-
-		},
-		componentDidMount: function() {
-
-			this.setState( {
-				isDone: this.props.todo.done
-			} );
 
 		},
 		onChange: function( e ) {
@@ -478,12 +516,26 @@
 			this.props.onRemoveTodoItem( todoLabel, todo );
 
 		},
+		showRemoveButton: function() {
+
+			this.setState( { "showRemoveButton": true } );
+
+		},
+		hideRemoveButton: function() {
+
+			this.setState( { "showRemoveButton": false } );
+
+		},
 		render: function() {
 
 			var todoInfo = this.props.todo;
+			var removeButtonClass = this.state.showRemoveButton ?
+				"todo-item-remove-button" : "hide";
 
 			return (
-				<div className="todo-item">
+				<div className="todo-item"
+					onMouseEnter={ this.showRemoveButton }
+					onMouseLeave={ this.hideRemoveButton }>
 					<input type="checkbox"
 						checked={ this.state.isDone }
 						onChange={ this.onChange } />
@@ -491,7 +543,7 @@
 						{ todoInfo.todo }
 					</div>
 					<button id="todo-item-remove-button"
-						className="todo-item-remove-button"
+						className={ removeButtonClass }
 						onClick={ this.handleRemoveTodoItem }>
 						<i className="fa fa-minus-square"></i>
 					</button>
