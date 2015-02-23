@@ -14,6 +14,4 @@ Production:
 
 Todo
 ----
-1. jcolor
-2. resizable todoBox
-3. integrate timetracker
+1. integrate timetracker

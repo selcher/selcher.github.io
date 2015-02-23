@@ -6,71 +6,71 @@
 			// Load todo list from localStorage
 			// else use default
 			return {
-				todos: localStorage.todos ?
+				"todos": localStorage.todos ?
 				JSON.parse( localStorage.todos ) :
 				[
 					{
-						name: "Today",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Today",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					},
 					{
-						name: "Monday",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Monday",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					},
 					{
-						name: "Tuesday",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Tuesday",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					},
 					{
-						name: "Wednesday",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Wednesday",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					},
 					{
-						name: "Thursday",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Thursday",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					},
 					{
-						name: "Friday",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Friday",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					},
 					{
-						name: "Saturday",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Saturday",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					},
 					{
-						name: "Sunday",
-						color: "rgba(255,255,255,0.1)",
-						list: [
-							{ todo: "todo1", done: false },
-							{ todo: "todo2", done: false }
+						"name": "Sunday",
+						"color": "rgba(255,255,255,0.1)",
+						"list": [
+							{ "todo": "todo1", "done": false },
+							{ "todo": "todo2", "done": false }
 						]
 					}
 				]
@@ -91,7 +91,7 @@
 			var todos = JSON.stringify( this.state.todos );
 			var blob = new Blob(
 				[ todos ],
-				{ type: "text/plain;charset=utf-8" }
+				{ "type": "text/plain;charset=utf-8" }
 			);
 
 			// Uses FileSaver.js
@@ -113,7 +113,7 @@
 
 					todos = JSON.parse( reader.result );
 
-					this.setState( { todos: todos } );
+					this.setState( { "todos": todos } );
 
 				}.bind( this );
 
@@ -133,15 +133,13 @@
 					name: todoLabel,
 					color: "rgba(255,255,255,0.1)",
 					list: [
-						{ todo: "todo1", done: false },
-						{ todo: "todo2", done: false }
+						{ "todo": "todo1", "done": false },
+						{ "todo": "todo2", "done": false }
 					]
 				}
 			] );
 
-			this.setState( {
-				todos: newTodos
-			} );
+			this.setState( { "todos": newTodos } );
 
 		},
 		handleRemoveTodoBox: function( todoLabel ) {
@@ -161,9 +159,7 @@
 
 			newTodos.splice( indexOfTodoToRemove, 1 );
 
-			this.setState( {
-				todos: newTodos
-			} );
+			this.setState( { "todos": newTodos } );
 
 		},
 		handleNewTodoItem: function( todoLabel, todo ) {
@@ -175,16 +171,14 @@
 				if ( todoInfo.name === todoLabel ) {
 
 					todoInfo.list = todoInfo.list.concat( [
-						{ todo: todo, done: false }
+						{ "todo": todo, "done": false }
 					] );
 
 				}
 
 			} );
 
-			this.setState( {
-				todos: newTodos
-			} );
+			this.setState( { "todos": newTodos } );
 
 		},
 		handleRemoveTodoItem: function( todoLabel, todo ) {
@@ -216,9 +210,24 @@
 
 			} );
 
-			this.setState( {
-				todos: newTodos
+			this.setState( { "todos": newTodos } );
+
+		},
+		handleColorChange: function( name, color ) {
+
+			var newTodos = this.state.todos.slice();
+
+			newTodos.forEach( function( todo ) {
+
+				if ( todo.name === name ) {
+
+					todo.color = "#" + color;
+
+				}
+
 			} );
+
+			this.setState( { "todos": newTodos } );
 
 		},
 		render: function() {
@@ -232,7 +241,8 @@
 					<TodoBoxes todos={ this.state.todos }
 						onRemoveTodoBox={ this.handleRemoveTodoBox }
 						onNewTodoItem={ this.handleNewTodoItem }
-						onRemoveTodoItem={ this.handleRemoveTodoItem } />
+						onRemoveTodoItem={ this.handleRemoveTodoItem }
+						handleColorChange={ this.handleColorChange } />
 				</div>
 			);
 
@@ -273,7 +283,7 @@
 				<div className="todo-menu-container pure-form">
 					<label for="load-file-input">
 						<i className="fa fa-upload"></i>
-						<input type="file" value="Load from File"
+						<input type="file"
 							id="load-file-input"
 							className="pure-button pure-button-primary"
 							onChange={ this.onLoadFromFile }
@@ -308,13 +318,15 @@
 			var onRemoveTodoBox = this.props.onRemoveTodoBox;
 			var onNewTodoItem = this.props.onNewTodoItem;
 			var onRemoveTodoItem = this.props.onRemoveTodoItem;
+			var handleColorChange = this.props.handleColorChange;
 			var todoBoxes = this.props.todos.map(
 				function( todo ) {
 					return (
 						<TodoBox todo={ todo }
 							onRemoveTodoBox={ onRemoveTodoBox }
 							onNewTodoItem={ onNewTodoItem }
-							onRemoveTodoItem={ onRemoveTodoItem } />
+							onRemoveTodoItem={ onRemoveTodoItem }
+							handleColorChange={ handleColorChange } />
 					);
 				}
 			);
@@ -377,7 +389,8 @@
 						showControls={ this.state.showControls }
 						onRemoveTodoBox={ this.props.onRemoveTodoBox }
 						onNewTodoItem={ this.props.onNewTodoItem }
-						updateTodoBoxSize={ this.handleUpdateTodoBoxSize } />
+						updateTodoBoxSize={ this.handleUpdateTodoBoxSize }
+						handleColorChange={ this.props.handleColorChange } />
 					<TodoList name={ todoData.name }
 						list={ todoData.list }
 						onRemoveTodoItem={ this.props.onRemoveTodoItem } />
@@ -450,6 +463,8 @@
 						onClick={ this.onRemoveTodoBox }>
 					</i>
 					{ this.props.name }
+					<input className="color colorPicker"
+						ref="colorPicker" />
 					<form className={ formClass }
 						onSubmit={ this.handleSubmit }>
 						<input type="text" ref="newTodo"
@@ -458,6 +473,18 @@
 					</form>
 				</div>
 			);
+
+		},
+		componentDidMount: function() {
+
+			var colorPickerInput = this.refs.colorPicker.getDOMNode();
+
+			colorPickerInput.onchange = this.handleColorChange;
+
+		},
+		handleColorChange: function( e ) {
+
+			this.props.handleColorChange( this.props.name, e.target.value );
 
 		}
 	} );
