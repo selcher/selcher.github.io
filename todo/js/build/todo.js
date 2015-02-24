@@ -322,7 +322,8 @@
 			var todoBoxes = this.props.todos.map(
 				function( todo ) {
 					return (
-						React.createElement(TodoBox, {todo: todo, 
+						React.createElement(TodoBox, {
+							todo: todo, 
 							onRemoveTodoBox: onRemoveTodoBox, 
 							onNewTodoItem: onNewTodoItem, 
 							onRemoveTodoItem: onRemoveTodoItem, 
@@ -336,6 +337,13 @@
 					todoBoxes 
 				)
 			);
+
+		},
+		componentDidMount: function() {
+
+			$( ".todo-list-container" ).sortable( {
+				"placeholder": "ui-state-highlight"
+			} );
 
 		}
 	} );
