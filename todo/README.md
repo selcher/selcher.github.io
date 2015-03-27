@@ -14,4 +14,5 @@ Production:
 
 Todo
 ----
-1. integrate timetracker
+1. Implement sortable feature
+2. integrate timetracker

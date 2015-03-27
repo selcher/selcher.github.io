@@ -338,13 +338,6 @@
 				</div>
 			);
 
-		},
-		componentDidMount: function() {
-
-			$( ".todo-list-container" ).sortable( {
-				"placeholder": "ui-state-highlight"
-			} );
-
 		}
 	} );
 
