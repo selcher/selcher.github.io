@@ -35,7 +35,6 @@
 		.carousel .item {
 		  height: 500px;
 		  background-color: #777;
-		  background-image: url( "img/hall.jpg" );
 		}
 
 		.carousel-inner > .item > img {
@@ -44,6 +43,15 @@
 		  left: 0;
 		  min-width: 100%;
 		  height: 500px;
+		}
+
+		.bg-hall {
+			background-image: url( "img/hall.jpg" );
+		}
+
+		.bg-canvas-app {
+			background-image: url( "img/canvas.png" );
+			background-repeat: no-repeat;
 		}
 
 	</style>
@@ -113,11 +121,13 @@
 			</li>
 			<li data-target="#myCarousel" data-slide-to="1">
 			</li>
+			<li data-target="#myCarousel" data-slide-to="2">
+			</li>
 		</ol>
 
 		<div class="carousel-inner" role="listbox">
 
-			<div class="item active">
+			<div class="item bg-hall active">
 				<!-- <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide"> -->
 				<div class="container">
 					<div class="carousel-caption">
@@ -134,7 +144,7 @@
 				</div>
 			</div>
 
-			<div class="item">
+			<div class="item bg-hall">
 				<!-- <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide"> -->
 				<div class="container">
 					<div class="carousel-caption">
@@ -142,6 +152,22 @@
 						<p>
 							<a class="btn btn-lg btn-primary"
 								href="visualnovel/index.html"
+								role="button">
+								Go
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="item bg-canvas-app">
+				<!-- <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide"> -->
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>Canvas App</h1>
+						<p>
+							<a class="btn btn-lg btn-primary"
+								href="canvas/canvas.html"
 								role="button">
 								Go
 							</a>
