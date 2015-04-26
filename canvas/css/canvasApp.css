@@ -24,10 +24,40 @@ body {
 }
 
 
+/* loading page */
+#loadPage {
+	/* vertically align */
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translateX( -50% ) translateY( -50% );
+	-ms-transform: translateX( -50% ) translateY( -50% );
+	transform: translateX( -50% ) translateY( -50% );
+
+	width: 200px;
+
+	margin: auto;
+	padding: 20px;
+}
+
+#loadPage #loadBarTotal {
+	height: 2px;
+	background: rgba( 0, 139, 139, 0.5 );
+}
+
+#loadPage #loadBar {
+	height: 2px;
+
+	margin-top: -2px;
+	background: rgba( 0, 139, 139, 1 );
+}
+
 
 /* top menu */
 
 #topMenu {
+	display: none;
+
 	position: fixed;
 	top: 0;
 	z-index: 11;
@@ -61,13 +91,19 @@ body {
 
 	display: inline-block;
 
-	background: rgba( 255, 255, 255, 0.3 ) url("../img/github-logo.png") 0 0 no-repeat;
+	background: rgba( 128, 0, 128, 0.5 ) url("../img/github-logo.png") 0 0 no-repeat;
 
 	border-radius: 1em;
 }
 
 #topMenu .githubIcon:hover {
-	background-color: rgba( 255, 255, 255, 0.5 );
+	background-color: rgba( 128, 0, 128, 1 );
+
+	-webkit-transition: background-color 500ms linear;
+    -moz-transition: background-color 500ms linear;
+    -o-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+    transition: background-color 500ms linear;
 
 	cursor: pointer;
 }
@@ -109,6 +145,12 @@ body {
 
 #cropDivMenu .button:hover {
 	background-color: rgba( 255, 255, 255, 0.1 );
+
+	-webkit-transition: background-color 300ms linear;
+    -moz-transition: background-color 300ms linear;
+    -o-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
 }
 
 #cropDivMenu #cropImgBtn {
@@ -153,10 +195,18 @@ body {
 #cropboxContainer {
 	display: block;
 
-	margin: 35px 0px;
+	height: 100%;
+
+	margin: 0;
+	padding-top: 31px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 #cropboxContainer #cropboxFormContainer {
+	height: 100%;
 	width: 100%;
 	overflow: auto;
 }
@@ -192,10 +242,20 @@ body {
 
 	width: 100%;
 	height: 100%;
+
+	padding-top: 31px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 #collageCropContainer #collageCropCanvasContainer {
-	margin: 35px 10px;
+	height: 100%;
+	width: 100%;
+
+	margin: 0;
+	padding: 0;
 
 	overflow: auto;
 }
@@ -253,7 +313,7 @@ body {
 }
 
 #saveMenu {
-	padding: 10px 0 0px 60px !important;
+	padding: 8px 0 0px 210px !important;
 }
 
 
@@ -265,6 +325,8 @@ canvas cont = 800 + 200
 */
 
 #toolbar {
+	display: none;
+
 	width: 1566px;
 	height: 94px;
 
@@ -395,6 +457,12 @@ canvas cont = 800 + 200
 
 .toolbar_menu input[type="button"]:hover {
 	background: rgba( 255, 255, 255, 0.2 );
+
+	-webkit-transition: background-color 300ms linear;
+    -moz-transition: background-color 300ms linear;
+    -o-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
 }
 
 .toolbar_menu select {
@@ -430,6 +498,12 @@ canvas cont = 800 + 200
 .toolbar_menu #mvUp:hover,
 .toolbar_menu #mvBk:hover {
 	background-color: rgba( 255, 255, 255, 0.1 );
+
+	-webkit-transition: background-color 300ms linear;
+    -moz-transition: background-color 300ms linear;
+    -o-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
 }
 
 .toolbar_menu_div {
@@ -469,6 +543,12 @@ canvas cont = 800 + 200
 
 .toolbar_menu_div .add-button:hover {
 	background: rgba( 255, 255, 255, 0.1 );
+
+	-webkit-transition: background-color 300ms linear;
+    -moz-transition: background-color 300ms linear;
+    -o-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
 }
 
 .toolbar_menu_div .add-label {
@@ -533,7 +613,13 @@ canvas cont = 800 + 200
 }
 
 .toolbar_menu_save .button:hover {
-	background-color: rgba( 255, 255, 255, 0.5 );
+	background-color: rgba( 255, 255, 255, 0.1 );
+
+	-webkit-transition: background-color 300ms linear;
+    -moz-transition: background-color 300ms linear;
+    -o-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
 }
 
 .toolbar_menu_save #saveImage {
@@ -542,10 +628,6 @@ canvas cont = 800 + 200
 
 .toolbar_menu_save #refreshImage {
 	background-position: -232px -15px;
-}
-
-.toolbar_menu_save .button:hover {
-	background-color: rgba( 255, 255, 255, 0.1 );
 }
 
 .toolbar_menu_row_span {
@@ -631,6 +713,8 @@ canvas div  = 800 + 2
 */
 
 #canvasCont {
+	display: none;
+
 	width: 1566px;
 	height: 769px;
 	z-index: 9;
@@ -824,12 +908,20 @@ canvas div  = 800 + 2
 
 .selectedList:hover {
 	background: rgba( 140,50,140,0.6 );
+
+	-webkit-transition: background-color 300ms linear;
+    -moz-transition: background-color 300ms linear;
+    -o-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
 }
 
 
 
 /* footer */
 #footerCont {
+	display: none;
+
 	width: 1000px;
 	height: 20px;
 	margin: 0 auto;

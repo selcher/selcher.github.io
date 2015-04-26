@@ -36,10 +36,6 @@ function CanvasCrop( app ) {
 		this.generatedCropContainer = doc.getElementById( "collageCropContainer" );
 		this.generatedCropCanvas = doc.getElementById( "collageCrop" );
 
-		// Stored for resizing when browser window resizes.
-		this.cropBoxFormContainer = $( "#cropboxFormContainer" );
-		this.collageCropCanvasContainer = $( "#collageCropCanvasContainer" );
-
 		// Crop div menu buttons.
 		this.showCropDivBtn = doc.getElementById( "cropBtn" );
 		this.hideCropDivBtn = doc.getElementById( "closeCrop" );
@@ -83,30 +79,7 @@ CanvasCrop.prototype.initHandlers = function initHandlers() {
 
 	var self = this;
 
-	var onopenresize = function () {
-
-		var height = $( "#cropDiv" ).height() - 20;
-
-		self.cropBoxFormContainer.height( height );
-		self.collageCropCanvasContainer.height( height );
-
-	};
-
-	var onresize = function () {
-
-		var height = $( "#cropDiv" ).height() - 40;
-
-		self.cropBoxFormContainer.height( height );
-		self.collageCropCanvasContainer.height( height );
-
-	};
-
-	window.onresize = function() {
-		onresize();
-	};
-
 	this.showCropDivBtn.onclick = function() {
-		onopenresize();
 		self.topMenu.style.display = "none";
 		self.canvasCont.style.display = "none";
 		self.toolbar.style.display = "none";
@@ -191,7 +164,6 @@ CanvasCrop.prototype.displayCropDiv = function displayCropDiv() {
 	if ( display === "none" || display === "" ) {
 
 		container.style.display = "block";
-		// this.hideCropDivBtn.style.display = "block";
 		this.menu.style.display = "block";
 
 	}
@@ -211,7 +183,6 @@ CanvasCrop.prototype.hideCropDiv = function hideCropDiv() {
 	if ( display == 'block' ) {
 
 		container.style.display = "none";
-		// this.hideCropDivBtn.style.display = "none";
 		this.menu.style.display = "none";
 
 	}
@@ -290,8 +261,8 @@ CanvasCrop.prototype.showPreview = function showPreview( coords ) {
 	this.cropH.value = coords.h;
 
 	var cropImgPreviewContainer = this.cropImgPreviewContainer;
-	cropImgPreviewContainer.style.width = coords.w;
-	cropImgPreviewContainer.style.height = coords.h;
+	cropImgPreviewContainer.style.width = coords.w + "px";
+	cropImgPreviewContainer.style.height = coords.h + "px";
 
 	var oImgW = this.cropBox.width;
 	var oImgH = this.cropBox.height;
