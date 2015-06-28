@@ -3,214 +3,279 @@
 
 <head>
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE-edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-	<title>Selcher</title>
+    <title>Selcher</title>
 
-	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
-
-	<style>
-
-		body  {
-			padding-top: 50px;
-		}
-
-		/* CUSTOMIZE THE CAROUSEL */
-
-		/* Carousel base class */
-		.carousel {
-		  height: 500px;
-		  margin-bottom: 0px;
-		}
-
-		/* Since positioning the image, we need to help out the caption */
-		.carousel-caption {
-		  z-index: 10;
-		  background-color: rgba( 0, 0, 0, 0.5 );
-		}
-
-		/* Declare heights because of positioning of img element */
-		.carousel .item {
-		  height: 500px;
-		  background-color: #777;
-		}
-
-		.carousel-inner > .item > img {
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		  min-width: 100%;
-		  height: 500px;
-		}
-
-		.bg-hall {
-			background-image: url( "img/hall.jpg" );
-		}
-
-		.bg-canvas-app {
-			background-image: url( "img/canvas.png" );
-			background-repeat: no-repeat;
-		}
-
-	</style>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
 
 </head>
 
 <body>
 
-	<!-- navigation bar -->
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Selcher</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li class="dropdown">
-						<a href="#"
-							class="dropdown-toggle"
-							data-toggle="dropdown"
-							role="button"
-							aria-expanded="false">
-							Projects
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<a href="visualnoveljs"
-									target="_blank">
-									VisualNovelJS
-								</a>
-							</li>
-							<li>
-								<a href="timetracker"
-									target="_blank">
-									Timetracker
-								</a>
-							</li>
-							<li>
-								<a href="todo"
-									target="_blank">
-									Todo
-								</a>
-							</li>
-							<li>
-								<a href="collage"
-									target="_blank">
-									Canvas
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li class="dropdown">
-						<a href="#"
-							class="dropdown-toggle"
-							data-toggle="dropdown"
-							role="button"
-							aria-expanded="false">
-							Games
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<a href="games/concentration/index.html"
-									target="_blank">
-									Concentration
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+    <!-- Dropdown project links -->
+    <ul id="projects-links" class="dropdown-content">
+        <li>
+            <a href="visualnoveljs"
+                target="_blank">
+                VisualNovel
+            </a>
+        </li>
+        <li>
+            <a href="collage"
+                target="_blank">
+                Canvas
+            </a>
+        </li>
+        <li>
+            <a href="timetracker"
+                target="_blank">
+                Timetracker
+            </a>
+        </li>
+        <li>
+            <a href="todo"
+                target="_blank">
+                Todo
+            </a>
+        </li>
+    </ul>
 
-	<!-- carousel -->
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Dropdown game links -->
+    <ul id="games-links" class="dropdown-content">
+        <li>
+            <a href="games/concentration/index.html"
+                target="_blank">
+                Concentrate
+            </a>
+        </li>
+    </ul>
 
-		<!-- indicators -->
-		<ol class="carousel-indicators">
-			<li data-target="#myCarousel" data-slide-to="0" class="active">
-			</li>
-			<li data-target="#myCarousel" data-slide-to="1">
-			</li>
-		</ol>
+    <!-- Navigation bar -->
+    <nav class="blue darken-3" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo">
+                Selcher
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a class="dropdown-button" href="#"
+                        data-activates="projects-links">
+                        Projects
+                        <i class="material-icons right">
+                            arrow_drop_down
+                        </i>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-button" href="#"
+                        data-activates="games-links">
+                        <i class="material-icons right">
+                            arrow_drop_down
+                        </i>
+                        Games
+                    </a>
+                </li>
+            </ul>
+            <ul id="nav-mobile" class="side-nav">
+                <li class="no-padding">
 
-		<div class="carousel-inner" role="listbox">
+                    <ul class="collapsible collapsible-accordion"
+                        data-collapsible="accordion">
+                        <li class="bold">
+                            <a class="collapsible-header active waves-effect waves-blue">
+                                <i class="material-icons">
+                                    whatshot
+                                </i>
+                                Projects
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="visualnoveljs"
+                                            target="_blank">
+                                            VisualNovel
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="collage"
+                                            target="_blank">
+                                            Canvas
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="timetracker"
+                                            target="_blank">
+                                            Timetracker
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="todo"
+                                            target="_blank">
+                                            Todo
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="collapsible collapsible-accordion">
+                        <li class="bold">
+                            <a class="collapsible-header waves-effect waves-blue">
+                                <i class="material-icons">
+                                    games
+                                </i>
+                                Games
+                            </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li>
+                                        <a href="games/concentration/index.html"
+                                            target="_blank">
+                                            Concentrate
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
 
-			<div class="item bg-hall active">
-				<!-- <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide"> -->
-				<div class="container">
-					<div class="carousel-caption">
-						<h1>Visual Novel JS</h1>
-						<p>Create Visual Novels on the Web</p>
-						<p>
-							<a class="btn btn-lg btn-success"
-								href="visualnoveljs"
-								role="button">
-								Get Started
-							</a>
-						</p>
-					</div>
-				</div>
-			</div>
+                </li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+        </div>
+    </nav>
 
-			<div class="item bg-canvas-app">
-				<!-- <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide"> -->
-				<div class="container">
-					<div class="carousel-caption">
-						<h1>Canvas App</h1>
-						<p>
-							<a class="btn btn-lg btn-primary"
-								href="collage"
-								role="button">
-								Go
-							</a>
-						</p>
-					</div>
-				</div>
-			</div>
+    <div id="index-banner" class="parallax-container valign-wrapper">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row right">
+                    <div class="card-panel hoverable dark-panel">
+                        <h5 class="header sl2">
+                            A Web Developer
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="parallax">
+            <img src="img/banner.png" alt="Background img" />
+        </div>
+    </div>
 
-		</div>
+    <div class="container">
+        <div class="section no-pad">
 
-		<a class="left carousel-control" href="#myCarousel"
-			role="button" data-slide="prev">
-			<span class="glyphicon glyphicon-chevron-left"
-				aria-hidden="true">
-			</span>
-			<span class="sr-only">Previous</span>
-		</a>
+            <div class="row">
+                <div class="col s12">
+                    <div class="icon-block">
+                        <h2 class="center green-text">
+                            <i class="material-icons">settings</i>
+                        </h2>
+                        <h5 class="center">
+                            MY LATEST PROJECTS
+                        </h5>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
 
-		<a class="right carousel-control" href="#myCarousel"
-			role="button" data-slide="next">
-			<span class="glyphicon glyphicon-chevron-right"
-				aria-hidden="true">
-			</span>
-			<span class="sr-only">Next</span>
-		</a>
+        </div>
+    </div>
 
-	</div>
+    <div id="slider-container" class="parallax-container">
+        <div class="slider">
+            <ul class="slides">
+                <li>
+                    <img src="img/hall.png">
+                    <div class="caption right-align">
+                        <div class="card-panel hoverable dark-panel">
+                            <h3>VisualNovelJS</h3>
+                            <h5 class="light grey-text text-lighten-3">
+                                Create Visual Novels on the Web
+                            </h5>
+                        </div>
+                        <div class="row right">
+                            <a href="http://selcher.github.io/visualnoveljs" target="_blank" id="download-button" class="btn-large waves-effect waves-light blue darken-4">
+                                Get Started
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/canvas.png">
+                    <div class="caption right-align">
+                        <div class="card-panel hoverable dark-panel">
+                            <h3>Canvas App</h3>
+                            <h5 class="light grey-text text-lighten-3">
+                                Filter, Crop, Save
+                            </h5>
+                        </div>
+                        <div class="row right">
+                            <a href="http://selcher.github.io/collage" target="_blank" id="download-button" class="btn-large waves-effect waves-light green darken-1">
+                                Try it
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-	<hr>
+    <footer class="page-footer blue darken-3">
 
-	<!-- footer -->
-	<footer>
-		<p>
-			&copy; 2015
-			<a href="https://github.com/selcher">
-				<button type="button" class="btn btn-primary btn-xs">
-					<span class="glyphicon glyphicon-star"></span>
-					 Github
-				</button>
-			</a>
-		</p>
-	</footer>
+        <div class="container">
+            <div class="row">
 
-	<script src="js/jquery-1.11.2.min.js"></script>
-	<script src="js/bootstrap.js"></script>
+                <div class="col l6 s12">
+                    <h5 class="white-text">
+                        <i class="material-icons left">
+                            add
+                        </i>
+                        Currently
+                    </h5>
+                    <p class="grey-text text-lighten-4">
+                        Learning Web Development
+                    </p>
+                </div>
+
+                <div class="col l6 s12">
+                    <h5 class="white-text">
+                        <i class="material-icons left">
+                            filter_drama
+                        </i>
+                        Connect
+                    </h5>
+                    <ul>
+                        <li>
+                            <a class="white-text"
+                                href="https://github.com/selcher">
+                                github
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <div class="container">
+                Made with &hearts; by Selcher
+            </div>
+        </div>
+
+    </footer>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
 
 </body>
 
