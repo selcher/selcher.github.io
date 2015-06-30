@@ -1,0 +1,26 @@
+{
+  "name": "selcher-github-io",
+  "version": "1.0.0",
+  "description": "Github page",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/selcher/selcher.github.io.git"
+  },
+  "author": "Selcher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/selcher/selcher.github.io/issues"
+  },
+  "homepage": "https://github.com/selcher/selcher.github.io",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-cssmin": "^0.12.3",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "matchdep": "^0.3.0"
+  }
+}
