@@ -1,5 +1,8 @@
 module.exports = function( grunt ) {
 
+	// Removes need for grunt.loadNpmTasks like matchdep but faster
+	require( 'jit-grunt' )( grunt );
+
 	// Project Configuration
 	grunt.initConfig( {
 		pkg : grunt.file.readJSON( 'package.json' ),
@@ -37,7 +40,7 @@ module.exports = function( grunt ) {
 	// grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 
 	// Replace multiple loadNpmTasks with matchdep and let it automatically add them
-	require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
+	// require( 'matchdep' ).filterDev( 'grunt-*' ).forEach( grunt.loadNpmTasks );
 
 	// load Npm tasks... alertnative to matchdep
 	// require( 'load-grunt-tasks' )( grunt, [ 'grunt-*', '!grunt-template-jasmine-requirejs' ] );
