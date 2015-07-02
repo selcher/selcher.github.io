@@ -29,6 +29,16 @@ module.exports = function( grunt ) {
 				dest : '<%= buildCssSrcMinFile %>'
 			}
 		},
+		uncss: {
+			dist: {
+				files: [
+					{
+						src: [ 'index.html' ],
+						dest: [ 'css/style-clean.css' ]
+					}
+				]
+			}
+		},
 		watch : {
 			files: [ '<%= buildSrcFile %>', '<%= buildCssSrcFile %>' ],
 			tasks: [ 'cssmin', 'uglify' ]
@@ -51,6 +61,10 @@ module.exports = function( grunt ) {
 	// Development : watch for file changes and run:
 	// 1. jasmine for code testing
 	grunt.registerTask( 'dev', [ 'watch' ] );
+
+	// Task just seems to be running forever...
+	// on my local machine, need alternative
+	grunt.registerTask( 'uncss', [ 'uncss' ] );
 
 	// Production : check code and then minify
 	grunt.registerTask( 'prod', [ 'cssmin', 'uglify' ] );
