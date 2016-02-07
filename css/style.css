@@ -8,6 +8,26 @@ nav .brand-logo {
     color: #fff;
 }
 
+#index-banner img {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    transform: translate3d(0%, 0px, 0px) !important;
+
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
 #nav-mobile {
     background-color: #000;
 }
@@ -40,7 +60,7 @@ p {
         position: absolute;
         top: 40%;
     }
-  
+
     #index-banner .section {
         top: 10%;
     }
