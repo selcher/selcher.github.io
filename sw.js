@@ -1,7 +1,7 @@
 // Install the service worker
 this.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open('v1').then(function(cache) {
+        caches.open('v2').then(function(cache) {
             // The cache will fail if any of these resources can't be saved
             return cache.addAll(
                 [
@@ -28,6 +28,8 @@ this.addEventListener('install', function(event) {
                     '/font/roboto/Roboto-Regular.woff2',
                     '/font/material-design-icons/family-material-icons.woff2',
                     '/manifest.json',
+                    // External
+                    'https://d3tvtfb6518e3e.cloudfront.net/3/opbeat.min.js'
                 ]
             ).then(
                 function() {
